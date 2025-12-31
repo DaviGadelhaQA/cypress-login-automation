@@ -13,7 +13,7 @@ class LoginPage {
     }
 
     handleUserModal() {
-        cy.get('#myModal', { timeout: 10000 })
+         cy.get('#myModal', { timeout: 10000 })
             .should('be.visible')
             .then(() => {
                 cy.get('#myModal').invoke('remove');
@@ -33,6 +33,12 @@ class LoginPage {
 
     submit() {
         cy.get('#signInBtn').click();
+    }
+
+    handleAlert(message){
+        cy.get('.alert-danger')
+            .should('be.visible')
+            .and('contain', message);
     }
 
     loginAs(profile, role) {

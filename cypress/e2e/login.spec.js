@@ -39,23 +39,20 @@ describe('Login Practice', () => {
 
   describe('Negative Scenarios', () => {
     it('TC_Login_007 - Missing required fields', () => {
-      cy.get('#signInBtn').click();
-      cy.get('.alert-danger').should('be.visible').and('contain', 'Empty username/password.');
+      loginPage.submit();
+      loginPage.handleAlert('Empty username/password.');
     });
 
     //Flaky test
     it('TC_Login_008 - Missing check the terms', () => {
-      cy.get('#username').type('rahulshettyacademy');
-      cy.get('#password').type('learning');
+      loginPage.fillCredentials();
 
-      cy.get('input[value="admin"]').click();
-      cy.get('select.form-control').select('Teacher');
+      loginPage.selectProfile('admin');
+      loginPage.selectRole('Teacher');
 
-      cy.get('#signInBtn').click();
+      loginPage.submit();
 
-      cy.get('.alert-danger')
-        .should('be.visible')
-        .and('contain', 'Empty terms');
+      loginPage.handleAlert('Empty terms')
 
       cy.url().should('not.contain', '/angularpractice/shop');
     });
@@ -66,16 +63,14 @@ describe('Login Practice', () => {
       cy.get('#username').type(longText);
       cy.get('#password').type(longText);
 
-      cy.get('input[value="admin"]').click();
-      cy.get('select.form-control').select('Teacher');
+      loginPage.selectProfile('admin');
+      loginPage.selectRole('Teacher');
 
-      cy.get('#terms').check();
-      cy.get('#signInBtn').click();
+      loginPage.acceptTerms();
+      loginPage.submit();
 
-      cy.get('.alert-danger')
-        .should('be.visible')
-        .and('contain', 'Incorrect username/password.');
-
+      loginPage.handleAlert("Incorrect username/password.");
+        
       cy.url().should('not.contain', '/angularpractice/shop');
     });
   });
