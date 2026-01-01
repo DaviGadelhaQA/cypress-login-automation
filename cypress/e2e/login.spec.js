@@ -1,4 +1,4 @@
-import loginPage from "../../page/loginPage";
+import loginPage from "../page/loginPage";
 
 describe('Login Practice', () => {
   beforeEach(() => {
